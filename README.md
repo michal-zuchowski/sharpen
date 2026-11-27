@@ -1,30 +1,30 @@
 # sharpen
 
-Skill dla agentów AI ograniczający skills erosion bez spowalniania pracy:
+An AI-agent skill that fights skills erosion without slowing you down:
 
-1. **Najpierw zgadnij** — przed nietrywialną zmianą jedno pytanie, agent czeka na odpowiedź (`skip` pomija).
-2. **Jedna lekcja** — 1 zdanie po zadaniu.
-3. **Log** — `~/.sharpen-log.md`, `/sharpen review` robi z niego 5 pytań.
+1. **Predict first** — before a non-trivial change the agent asks one question and waits for your answer (`skip` skips it).
+2. **One lesson** — a single sentence after each task.
+3. **Log** — `~/.sharpen-log.md`; `/sharpen review` turns it into 5 quiz questions.
 
-Nie działa w trybach autonomicznych (np. autopilot), bo tam agent nie czeka na odpowiedzi.
+Doesn't work in fully autonomous modes (e.g. autopilot), since the agent won't wait for answers there.
 
-## Instalacja
+## Install
 
-Najpierw sklonuj repo (prywatne, wymaga dostępu):
+Clone the repo first:
 
 ```sh
-gh repo clone michal-zuchowski/sharpen ~/src/sharpen
+git clone https://github.com/michal-zuchowski/sharpen ~/src/sharpen
 ```
 
 ### GitHub Copilot CLI
 
 ```sh
-copilot skill add ~/src/sharpen/sharpen/SKILL.md
-# albo ręcznie:
+copilot skill add https://raw.githubusercontent.com/michal-zuchowski/sharpen/main/sharpen/SKILL.md
+# or symlink the clone:
 mkdir -p ~/.copilot/skills && ln -s ~/src/sharpen/sharpen ~/.copilot/skills/sharpen
 ```
 
-Sprawdź: `copilot skill list` lub `/skills` w sesji.
+Verify with `copilot skill list` or `/skills` in a session.
 
 ### Claude Code
 
@@ -38,24 +38,24 @@ mkdir -p ~/.claude/skills && ln -s ~/src/sharpen/sharpen ~/.claude/skills/sharpe
 mkdir -p ~/.codex/skills && ln -s ~/src/sharpen/sharpen ~/.codex/skills/sharpen
 ```
 
-### Standard `.agents` (wspólny dla kilku narzędzi, m.in. Copilot CLI)
+### Shared `.agents` location (read by several tools, incl. Copilot CLI)
 
 ```sh
 mkdir -p ~/.agents/skills && ln -s ~/src/sharpen/sharpen ~/.agents/skills/sharpen
 ```
 
-### Per projekt
+### Per project
 
-Skopiuj `sharpen/` do `.github/skills/`, `.claude/skills/` lub `.agents/skills/` w repo.
+Copy `sharpen/` into `.github/skills/`, `.claude/skills/` or `.agents/skills/` in your repo.
 
-### Narzędzia bez obsługi skilli (Cursor, Gemini CLI, Aider…)
+### Tools without skill support (Cursor, Gemini CLI, Aider…)
 
-Wklej treść `sharpen/SKILL.md` (bez frontmattera) do pliku reguł: `.cursor/rules/sharpen.mdc`, `GEMINI.md`, `AGENTS.md` lub `CONVENTIONS.md`.
+Paste the body of `sharpen/SKILL.md` (without frontmatter) into the rules file: `.cursor/rules/sharpen.mdc`, `GEMINI.md`, `AGENTS.md` or `CONVENTIONS.md`.
 
-## Aktualizacja
+## Update
 
 ```sh
 git -C ~/src/sharpen pull
 ```
 
-Symlinki podchwycą zmiany automatycznie (`copilot skill add` kopiuje plik — dodaj go ponownie).
+Symlinks pick up changes automatically. `copilot skill add` copies the file — re-run it to update.
